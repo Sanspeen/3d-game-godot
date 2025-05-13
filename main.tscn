@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://slpcglntmrx4"]
+[gd_scene load_steps=10 format=3 uid="uid://slpcglntmrx4"]
 
 [ext_resource type="Script" uid="uid://bdn2pao8jwtxo" path="res://player.gd" id="1_0xm2m"]
 [ext_resource type="Script" uid="uid://cp2vptvev8aux" path="res://npc.gd" id="2_h2yge"]
+[ext_resource type="Script" uid="uid://cov76khjlnwds" path="res://area_3d.gd" id="3_h2yge"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_7dm0k"]
 
@@ -12,6 +13,8 @@
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_7mycd"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_272bh"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_1bvp3"]
 
 [node name="main" type="Node3D"]
 
@@ -47,3 +50,13 @@ mesh = SubResource("CapsuleMesh_7mycd")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NPC"]
 shape = SubResource("CapsuleShape3D_272bh")
+
+[node name="Area3D" type="Area3D" parent="NPC"]
+script = ExtResource("3_h2yge")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPC/Area3D"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+shape = SubResource("SphereShape3D_1bvp3")
+
+[connection signal="body_entered" from="NPC/Area3D" to="NPC/Area3D" method="_on_body_entered"]
+[connection signal="body_exited" from="NPC/Area3D" to="NPC/Area3D" method="_on_body_exited"]
