@@ -1,0 +1,49 @@
+[gd_scene load_steps=8 format=3 uid="uid://slpcglntmrx4"]
+
+[ext_resource type="Script" uid="uid://bdn2pao8jwtxo" path="res://player.gd" id="1_0xm2m"]
+[ext_resource type="Script" uid="uid://cp2vptvev8aux" path="res://npc.gd" id="2_h2yge"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_7dm0k"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_1bvp3"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lquwl"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_7mycd"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_272bh"]
+
+[node name="main" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+mesh = SubResource("PlaneMesh_7dm0k")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 30, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 5, 10)
+current = true
+
+[node name="Player" type="CharacterBody3D" parent="."]
+script = ExtResource("1_0xm2m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
+mesh = SubResource("CapsuleMesh_1bvp3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+shape = SubResource("CapsuleShape3D_lquwl")
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(0.0158862, 0.224084, -0.97444, -0.00365272, 0.97457, 0.224054, 0.999867, 0, 0.0163007, -5.11076, 0.889403, 0)
+
+[node name="NPC" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.69171)
+script = ExtResource("2_h2yge")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NPC"]
+mesh = SubResource("CapsuleMesh_7mycd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPC"]
+shape = SubResource("CapsuleShape3D_272bh")
