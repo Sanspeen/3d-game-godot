@@ -7,7 +7,7 @@ var can_talk = false
 
 
 func _ready():
-	var npc_area = $NPC/Area3D
+	var npc_area = $NPC/AreaDialogoInteraccion
 	npc_area.connect("player_entered", _on_player_near)
 	npc_area.connect("player_exited", _on_player_leave)
 	dialogue_panel.visible = false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://slpcglntmrx4"]
+[gd_scene load_steps=18 format=3 uid="uid://slpcglntmrx4"]
 
 [ext_resource type="Script" uid="uid://bdn2pao8jwtxo" path="res://player.gd" id="1_0xm2m"]
 [ext_resource type="Script" uid="uid://d1h0gng0v2wgg" path="res://main.gd" id="1_1bvp3"]
@@ -6,11 +6,20 @@
 [ext_resource type="Script" uid="uid://cov76khjlnwds" path="res://area_3d.gd" id="3_h2yge"]
 [ext_resource type="Script" uid="uid://dlyavvmftoyll" path="res://talk_area.gd" id="5_lquwl"]
 
+[sub_resource type="QuadMesh" id="QuadMesh_lquwl"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lquwl"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_7mycd"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_272bh"]
+
 [sub_resource type="PlaneMesh" id="PlaneMesh_7dm0k"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_1bvp3"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lquwl"]
+height = 2.39504
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_7mycd"]
 
@@ -20,46 +29,66 @@
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_7mycd"]
 
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_lquwl"]
+
 [node name="main" type="Node3D"]
 script = ExtResource("1_1bvp3")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="ParedFondo" type="MeshInstance3D" parent="."]
+transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 10, -10.026)
+mesh = SubResource("QuadMesh_lquwl")
+skeleton = NodePath("../ParedDerecha")
+surface_material_override/0 = SubResource("StandardMaterial3D_lquwl")
+
+[node name="ParedDerecha" type="MeshInstance3D" parent="."]
+transform = Transform3D(-8.74228e-07, 0, -20, 0, 20, 0, 20, 0, -8.74228e-07, 10.105, 10, 0)
+mesh = SubResource("QuadMesh_7mycd")
+skeleton = NodePath("../ParedIzquierda")
+
+[node name="ParedIzquierda" type="MeshInstance3D" parent="."]
+transform = Transform3D(-8.74228e-07, 0, 20, 0, 20, 0, -20, 0, -8.74228e-07, -10, 10, 0)
+mesh = SubResource("QuadMesh_272bh")
+
+[node name="Suelo" type="MeshInstance3D" parent="."]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
 mesh = SubResource("PlaneMesh_7dm0k")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="Iluminacion" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 30, 0)
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="CamaraPrincipal" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 5, 10)
 current = true
 
 [node name="Player" type="CharacterBody3D" parent="."]
 script = ExtResource("1_0xm2m")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
+[node name="CuerpoPlayer" type="MeshInstance3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.450473, 0.906231, 0.183976)
 mesh = SubResource("CapsuleMesh_1bvp3")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+[node name="CollisionPlayer" type="CollisionShape3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.486821, 0.735664, 0.30095)
 shape = SubResource("CapsuleShape3D_lquwl")
 
-[node name="Camera3D" type="Camera3D" parent="Player"]
+[node name="TerceraPersonaCamera" type="Camera3D" parent="Player"]
 transform = Transform3D(0.0158862, 0.224084, -0.97444, -0.00365272, 0.97457, 0.224054, 0.999867, 0, 0.0163007, -5.11076, 0.889403, 0)
 
 [node name="NPC" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.69171)
 script = ExtResource("2_h2yge")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NPC"]
+[node name="CuerpoNPC" type="MeshInstance3D" parent="NPC"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06028, 0)
 mesh = SubResource("CapsuleMesh_7mycd")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NPC"]
+[node name="CollisionNPC" type="CollisionShape3D" parent="NPC"]
 shape = SubResource("CapsuleShape3D_272bh")
 
-[node name="Area3D" type="Area3D" parent="NPC"]
+[node name="AreaDialogoInteraccion" type="Area3D" parent="NPC"]
 script = ExtResource("3_h2yge")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NPC/Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPC/AreaDialogoInteraccion"]
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
 shape = SubResource("SphereShape3D_1bvp3")
 
@@ -101,7 +130,13 @@ offset_bottom = 90.0
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="body_entered" from="NPC/Area3D" to="NPC/Area3D" method="_on_body_entered"]
-[connection signal="body_exited" from="NPC/Area3D" to="NPC/Area3D" method="_on_body_exited"]
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -10)
+shape = SubResource("WorldBoundaryShape3D_lquwl")
+
+[connection signal="body_entered" from="NPC/AreaDialogoInteraccion" to="NPC/AreaDialogoInteraccion" method="_on_body_entered"]
+[connection signal="body_exited" from="NPC/AreaDialogoInteraccion" to="NPC/AreaDialogoInteraccion" method="_on_body_exited"]
 [connection signal="body_entered" from="NPC/TalkArea" to="NPC/TalkArea" method="_on_talk_area_body_entered"]
 [connection signal="body_exited" from="NPC/TalkArea" to="NPC/TalkArea" method="_on_talk_area_body_exited"]
