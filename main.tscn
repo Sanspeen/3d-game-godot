@@ -1,8 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://slpcglntmrx4"]
+[gd_scene load_steps=13 format=3 uid="uid://slpcglntmrx4"]
 
 [ext_resource type="Script" uid="uid://bdn2pao8jwtxo" path="res://player.gd" id="1_0xm2m"]
+[ext_resource type="Script" uid="uid://d1h0gng0v2wgg" path="res://main.gd" id="1_1bvp3"]
 [ext_resource type="Script" uid="uid://cp2vptvev8aux" path="res://npc.gd" id="2_h2yge"]
 [ext_resource type="Script" uid="uid://cov76khjlnwds" path="res://area_3d.gd" id="3_h2yge"]
+[ext_resource type="Script" uid="uid://dlyavvmftoyll" path="res://talk_area.gd" id="5_lquwl"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_7dm0k"]
 
@@ -16,7 +18,10 @@
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_1bvp3"]
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_7mycd"]
+
 [node name="main" type="Node3D"]
+script = ExtResource("1_1bvp3")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
@@ -58,5 +63,45 @@ script = ExtResource("3_h2yge")
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
 shape = SubResource("SphereShape3D_1bvp3")
 
+[node name="TalkArea" type="Area3D" parent="NPC"]
+script = ExtResource("5_lquwl")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NPC/TalkArea"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+shape = SubResource("SphereShape3D_7mycd")
+
+[node name="InteractWithNPC" type="CanvasLayer" parent="."]
+
+[node name="TalkPrompt" type="Label" parent="InteractWithNPC"]
+visible = false
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Presiona E para hablar"
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="DialoguePanel" type="Panel" parent="UI"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 180.0
+offset_bottom = 70.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/DialoguePanel"]
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 90.0
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="body_entered" from="NPC/Area3D" to="NPC/Area3D" method="_on_body_entered"]
 [connection signal="body_exited" from="NPC/Area3D" to="NPC/Area3D" method="_on_body_exited"]
+[connection signal="body_entered" from="NPC/TalkArea" to="NPC/TalkArea" method="_on_talk_area_body_entered"]
+[connection signal="body_exited" from="NPC/TalkArea" to="NPC/TalkArea" method="_on_talk_area_body_exited"]
